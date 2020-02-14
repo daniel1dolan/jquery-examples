@@ -30,9 +30,30 @@
           $(".edit").click(e => {
             let targ = $(e.target);
             let eField = $("<input>");
+            let confirm = $("<button>Confirm Changes</button>");
+            confirm.attr("class", "confirm");
             let ePar = targ.parent();
             eField.attr("type", "text");
+            eField.addClass("eField");
             ePar.append(eField);
+            ePar.append(confirm);
+            confirmbtn();
+          });
+        };
+        let confirmbtn = () => {
+          $(".confirm").click(e => {
+            let targ = $(e.target);
+            let eText = $(".eField").val();
+            console.log(eText);
+            let oTextC = targ.parent();
+            $(oTextC)
+              .contents()
+              .filter(function() {
+                return this.nodeType == 3;
+              })[0].nodeValue = eText;
+            console.log(oTextC);
+            $(".eField").hide();
+            $(".confirm").hide();
           });
         };
         $("#add-button").click(() => {
@@ -41,8 +62,8 @@
           let newL = $("<li>");
           newL.attr("class", count);
           let clear = $("<button>&times;</button>");
-          clear.attr("class", count);
-          clear.addClass("x");
+          clear.attr("id", count);
+          clear.attr("class", "x");
           let check = $("<input type='checkbox'>");
           let edit = $("<button>edit</button>");
           edit.attr("class", "edit");
